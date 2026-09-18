@@ -5,6 +5,10 @@ Instead of simply reading about algorithms, users can watch them explore a grid 
 
 This project combines algorithmic problem-solving with an interactive frontend to make graph traversal and pathfinding easier to understand.
 
+<img width="400" height="400" hspace="40" alt="Screenshot 2026-09-18 113812" src="https://github.com/user-attachments/assets/333902c0-1b48-402d-9a81-96e97a064002" />
+<img width="400" height="400" alt="Screenshot 2026-09-18 121018" src="https://github.com/user-attachments/assets/de3757ab-5a66-46b3-87e6-c917290c92ee" />
+
+
 ## Live Demo
 https://pathfinder-visualizers.netlify.app/
 
