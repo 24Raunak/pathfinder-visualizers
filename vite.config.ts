@@ -9,7 +9,3 @@ export default defineConfig({
     tailwindcss(),
   ],
 })
-
-
-
-hello hello

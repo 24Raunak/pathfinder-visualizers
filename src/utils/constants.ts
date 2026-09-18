@@ -1,7 +1,7 @@
 import { type AlgorithmSelectType, type MazeSelectType, type SpeedSelectType } from "./types";
 
-export const MAX_ROWS = 39;
-export const MAX_COLS = 49;
+export const MAX_ROWS = 10;
+export const MAX_COLS = 10;
 
 export const START_TILE_CONFIGURATION = {
   row: 1,
@@ -28,12 +28,12 @@ export const END_TILE_CONFIGURATION = {
 };
 
 export const TILE_STYLE =
-  "lg:w-[17px] md:w-[15px] xs:w-[8px] w-[7px] lg:h-[17px] md:h-[15px] xs:h-[8px] h-[7px] border-t border-r border-sky-200";
-export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-500";
-export const START_TILE_STYLE = TILE_STYLE + " bg-green-500";
-export const END_TILE_STYLE = TILE_STYLE + " bg-red-600";
+  "lg:w-[50px] md:w-[38px] xs:w-[29px] w-[28px] lg:h-[50px] md:h-[38px] xs:h-[29px] h-[28px] border-t border-r border-sky-200";
+export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-gray-400";
+export const START_TILE_STYLE = TILE_STYLE + " bg-blue-500";
+export const END_TILE_STYLE = TILE_STYLE + " bg-red-500";
 export const WALL_TILE_STYLE = TILE_STYLE + " bg-gray-200";
-export const PATH_TILE_STYLE = TILE_STYLE + " bg-green-600";
+export const PATH_TILE_STYLE = TILE_STYLE + " bg-slate-600";
 
 export const MAZES: MazeSelectType[] = [
   { name: "No Maze", value: "NONE" },

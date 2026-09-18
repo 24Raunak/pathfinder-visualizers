@@ -1,0 +1,6 @@
+components - what the user sees
+context - global state shared - data shared across app
+utils - helper code that performs secondary tasks
+hooks - wrappers around the context
+algorithms - pure algorithmic implementation
+utils - helper functions that are used throught the app
