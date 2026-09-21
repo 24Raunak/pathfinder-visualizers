@@ -10,11 +10,8 @@ import {
 } from "../utils/constants";
 import { resetGrid } from "../utils/resetGrid";
 import {
-  type AlgorithmType,
   type MazeType,
-  type SpeedType,
 } from "../utils/types";
-// import { Select } from "./Select";
 import RadioGroup from "./RadioGroup";
 import { useSpeed } from "../hooks/useSpeed";
 import { runMazeAlgorithm } from "../utils/runMazeAlgorithm";
@@ -28,6 +25,7 @@ export function Nav({
   isVisualizationRunningRef: RefObject<boolean>;
 }) {
   const [isDisabled, setIsDisabled] = useState(false);
+
   const {
     maze,
     setMaze,
@@ -38,6 +36,7 @@ export function Nav({
     algorithm,
     setAlgorithm,
   } = usePathfinding();
+
   const { startTile, endTile } = useTile();
   const { speed, setSpeed } = useSpeed();
 
@@ -50,6 +49,7 @@ export function Nav({
 
     setMaze(maze);
     setIsDisabled(true);
+
     runMazeAlgorithm({
       maze,
       grid,
@@ -58,6 +58,7 @@ export function Nav({
       setIsDisabled,
       speed,
     });
+
     const newGrid = grid.slice();
     setGrid(newGrid);
     setIsGraphVisualized(false);
@@ -66,7 +67,13 @@ export function Nav({
   const handlerRunVisualizer = () => {
     if (isGraphVisualized) {
       setIsGraphVisualized(false);
-      resetGrid({ grid: grid.slice(), startTile, endTile });
+
+      resetGrid({
+        grid: grid.slice(),
+        startTile,
+        endTile,
+      });
+
       return;
     }
 
@@ -77,12 +84,21 @@ export function Nav({
       endTile,
     });
 
-    animatePath(traversedTiles, path, startTile, endTile, speed);
+    animatePath(
+      traversedTiles,
+      path,
+      startTile,
+      endTile,
+      speed
+    );
+
     setIsDisabled(true);
     isVisualizationRunningRef.current = true;
+
     setTimeout(
       () => {
         const newGrid = grid.slice();
+
         setGrid(newGrid);
         setIsGraphVisualized(true);
         setIsDisabled(false);
@@ -91,7 +107,7 @@ export function Nav({
       SLEEP_TIME * (traversedTiles.length + SLEEP_TIME * 2) +
         EXTENDED_SLEEP_TIME *
           (path.length + 60) *
-          SPEEDS.find((s) => s.value === speed)!.value,
+          SPEEDS.find((s) => s.value === speed)!.value
     );
   };
 
@@ -99,6 +115,7 @@ export function Nav({
     <div className="flex items-center justify-center min-h-18 border-b shadow-gray-600 sm:px-5 px-0">
       <div className="flex items-center lg:justify-between justify-center w-full sm:w-208">
         <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3 sm:gap-6 sm:py-0 py-4 mt-2 mb-2">
+          
           <RadioGroup
             label="Maze"
             value={maze}
@@ -110,8 +127,8 @@ export function Nav({
           <RadioGroup
             label="Graph"
             value={algorithm}
-            isDisabled={isDisabled}
             options={PATHFINDING_ALGORITHMS}
+            isDisabled={isDisabled}
             onChange={setAlgorithm}
           />
 
@@ -128,6 +145,7 @@ export function Nav({
             isGraphVisualized={isGraphVisualized}
             handlerRunVisualizer={handlerRunVisualizer}
           />
+
         </div>
       </div>
     </div>
