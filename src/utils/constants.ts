@@ -13,7 +13,7 @@ import {
  * The CSS grid will make the tiles fit the available
  * container instead of giving every tile a fixed width.
  */
-export const MAX_ROWS = 14;
+export const MAX_ROWS = 15;
 export const MAX_COLS = 30;
 
 export const START_TILE_CONFIGURATION = {
@@ -58,7 +58,7 @@ export const END_TILE_STYLE =
   TILE_STYLE + " bg-red-600";
 
 export const WALL_TILE_STYLE =
-  TILE_STYLE + " bg-gray-200";
+  TILE_STYLE + " bg-stone-600";
 
 export const PATH_TILE_STYLE =
   TILE_STYLE + " bg-slate-600";

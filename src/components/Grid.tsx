@@ -58,7 +58,7 @@ export function Grid({
       <div
         className="
           w-full
-          max-w-[1400px]
+          max-w-350
           mx-auto
           overflow-hidden
           rounded-md
