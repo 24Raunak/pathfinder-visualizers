@@ -1,12 +1,13 @@
 import { twMerge } from "tailwind-merge";
 import {
   END_TILE_STYLE,
-  MAX_ROWS,
   PATH_TILE_STYLE,
   START_TILE_STYLE,
   TILE_STYLE,
   TRAVERSED_TILE_STYLE,
   WALL_TILE_STYLE,
+  MAX_ROWS,
+  MAX_COLS,
 } from "../utils/constants";
 
 interface MouseFunction {
@@ -36,29 +37,39 @@ export function Tile({
   handleMouseUp: MouseFunction;
   handleMouseEnter: MouseFunction;
 }) {
-  let tileTyleStyle;
+  let tileStyle = TILE_STYLE;
 
   if (isStart) {
-    tileTyleStyle = START_TILE_STYLE;
+    tileStyle = START_TILE_STYLE;
   } else if (isEnd) {
-    tileTyleStyle = END_TILE_STYLE;
+    tileStyle = END_TILE_STYLE;
   } else if (isWall) {
-    tileTyleStyle = WALL_TILE_STYLE;
+    tileStyle = WALL_TILE_STYLE;
   } else if (isPath) {
-    tileTyleStyle = PATH_TILE_STYLE;
+    tileStyle = PATH_TILE_STYLE;
   } else if (isTraversed) {
-    tileTyleStyle = TRAVERSED_TILE_STYLE;
-  } else {
-    tileTyleStyle = TILE_STYLE;
+    tileStyle = TRAVERSED_TILE_STYLE;
   }
 
-  const borderStyle =
-    row === MAX_ROWS - 1 ? "border-b" : col === 0 ? "border-l" : "";
-  const edgeStyle = row === MAX_ROWS - 1 && col === 0 ? "border-l" : "";
+  const isLastRow = row === MAX_ROWS - 1;
+  const isLastColumn = col === MAX_COLS - 1;
 
   return (
     <div
-      className={twMerge(tileTyleStyle, borderStyle, edgeStyle)}
+      className={twMerge(
+        tileStyle,
+
+        /*
+         * Keep the outer border clean.
+         */
+        isLastRow && "border-b",
+        isLastColumn && "border-r",
+
+        /*
+         * Make sure tiles don't shrink below the grid column.
+         */
+        "min-w-0 cursor-pointer select-none",
+      )}
       id={`${row}-${col}`}
       onMouseDown={() => handleMouseDown(row, col)}
       onMouseUp={() => handleMouseUp(row, col)}

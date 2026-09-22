@@ -1,7 +1,20 @@
-import { type AlgorithmSelectType, type MazeSelectType, type SpeedSelectType } from "./types";
+import {
+  type AlgorithmSelectType,
+  type MazeSelectType,
+  type SpeedSelectType,
+} from "./types";
 
-export const MAX_ROWS = 10;
-export const MAX_COLS = 10;
+/*
+ * Grid configuration
+ *
+ * Desktop:
+ * 24 rows × 60 columns = 1,440 tiles
+ *
+ * The CSS grid will make the tiles fit the available
+ * container instead of giving every tile a fixed width.
+ */
+export const MAX_ROWS = 14;
+export const MAX_COLS = 30;
 
 export const START_TILE_CONFIGURATION = {
   row: 1,
@@ -27,13 +40,28 @@ export const END_TILE_CONFIGURATION = {
   parent: null,
 };
 
+/*
+ * Tiles no longer have fixed widths/heights.
+ *
+ * The Grid component controls their size using CSS Grid.
+ */
 export const TILE_STYLE =
-  "lg:w-[50px] md:w-[38px] xs:w-[29px] w-[28px] lg:h-[50px] md:h-[38px] xs:h-[29px] h-[28px] border-t border-r border-sky-200";
-export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-gray-400";
-export const START_TILE_STYLE = TILE_STYLE + " bg-blue-500";
-export const END_TILE_STYLE = TILE_STYLE + " bg-red-500";
-export const WALL_TILE_STYLE = TILE_STYLE + " bg-gray-200";
-export const PATH_TILE_STYLE = TILE_STYLE + " bg-slate-600";
+  "w-full aspect-square border-r border-b border-slate-600/40";
+
+export const TRAVERSED_TILE_STYLE =
+  TILE_STYLE + " bg-gray-400";
+
+export const START_TILE_STYLE =
+  TILE_STYLE + " bg-blue-600";
+
+export const END_TILE_STYLE =
+  TILE_STYLE + " bg-red-600";
+
+export const WALL_TILE_STYLE =
+  TILE_STYLE + " bg-gray-200";
+
+export const PATH_TILE_STYLE =
+  TILE_STYLE + " bg-slate-600";
 
 export const MAZES: MazeSelectType[] = [
   { name: "No Maze", value: "NONE" },
@@ -44,7 +72,7 @@ export const MAZES: MazeSelectType[] = [
 export const PATHFINDING_ALGORITHMS: AlgorithmSelectType[] = [
   { name: "Dijkstra", value: "DIJKSTRA" },
   { name: "A-Star", value: "A_STAR" },
-  { name: "Breath First Search", value: "BFS" },
+  { name: "Breadth First Search", value: "BFS" },
   { name: "Depth First Search", value: "DFS" },
 ];
 
