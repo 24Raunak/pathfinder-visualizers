@@ -61,7 +61,7 @@ export const WALL_TILE_STYLE =
   TILE_STYLE + " bg-stone-600";
 
 export const PATH_TILE_STYLE =
-  TILE_STYLE + " bg-slate-600";
+  TILE_STYLE + " bg-yellow-600";
 
 export const MAZES: MazeSelectType[] = [
   { name: "No Maze", value: "NONE" },
