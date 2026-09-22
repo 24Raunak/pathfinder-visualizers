@@ -1,7 +1,10 @@
 import { type RefObject, useState } from "react";
 import { usePathfinding } from "../hooks/usePathfinding";
+import { useTile } from "../hooks/useTile";
 import { Tile } from "./Tile";
-import { checkIfStartOrEnd, createNewGrid } from "../utils/helpers";
+import { createNewGrid } from "../utils/helpers";
+
+type DraggingTile = "start" | "end" | null;
 
 export function Grid({
   isVisualizationRunningRef,
@@ -9,52 +12,131 @@ export function Grid({
   isVisualizationRunningRef: RefObject<boolean>;
 }) {
   const { grid, setGrid } = usePathfinding();
+  const { startTile, setStartTile, endTile, setEndTile } = useTile();
 
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [draggingTile, setDraggingTile] = useState<DraggingTile>(null);
 
-  const handleMouseDown = (row: number, col: number) => {
-    if (
-      isVisualizationRunningRef.current ||
-      checkIfStartOrEnd(row, col)
-    ) {
+  const moveSpecialTile = (
+    row: number,
+    col: number,
+    type: "start" | "end",
+  ) => {
+    // Don't allow start and end to occupy the same cell.
+    const otherTile = type === "start" ? endTile : startTile;
+
+    if (row === otherTile.row && col === otherTile.col) {
       return;
     }
 
-    setIsMouseDown(true);
+    const oldTile = type === "start" ? startTile : endTile;
 
-    const newGrid = createNewGrid(grid, row, col);
+    const newGrid = grid.map((gridRow) =>
+      gridRow.map((tile) => {
+        // Remove the old start/end marker.
+        if (tile.row === oldTile.row && tile.col === oldTile.col) {
+          return {
+            ...tile,
+            isStart: type === "start" ? false : tile.isStart,
+            isEnd: type === "end" ? false : tile.isEnd,
+            isWall: false,
+          };
+        }
+
+        // Don't turn the destination into a wall.
+        if (tile.row === row && tile.col === col) {
+          return {
+            ...tile,
+            isStart: type === "start",
+            isEnd: type === "end",
+            isWall: false,
+            isPath: false,
+            isTraversed: false,
+            distance: Infinity,
+            parent: null,
+          };
+        }
+
+        return tile;
+      }),
+    );
 
     setGrid(newGrid);
+
+    const movedTile = {
+      ...oldTile,
+      row,
+      col,
+      isStart: type === "start",
+      isEnd: type === "end",
+      isWall: false,
+      isPath: false,
+      isTraversed: false,
+      distance: Infinity,
+      parent: null,
+    };
+
+    if (type === "start") {
+      setStartTile(movedTile);
+    } else {
+      setEndTile(movedTile);
+    }
   };
 
-  const handleMouseUp = (row: number, col: number) => {
-    if (
-      isVisualizationRunningRef.current ||
-      checkIfStartOrEnd(row, col)
-    ) {
+  const handleMouseDown = (row: number, col: number) => {
+    if (isVisualizationRunningRef.current) {
       return;
     }
 
+    if (row === startTile.row && col === startTile.col) {
+      setDraggingTile("start");
+      setIsMouseDown(true);
+      return;
+    }
+
+    if (row === endTile.row && col === endTile.col) {
+      setDraggingTile("end");
+      setIsMouseDown(true);
+      return;
+    }
+
+    setDraggingTile(null);
+    setIsMouseDown(true);
+
+    setGrid(createNewGrid(grid, row, col));
+  };
+
+  const handleMouseUp = () => {
     setIsMouseDown(false);
+    setDraggingTile(null);
   };
 
   const handleMouseEnter = (row: number, col: number) => {
+    if (isVisualizationRunningRef.current || !isMouseDown) {
+      return;
+    }
+
+    if (draggingTile) {
+      moveSpecialTile(row, col, draggingTile);
+      return;
+    }
+
+    // Normal wall drawing.
     if (
-      isVisualizationRunningRef.current ||
-      checkIfStartOrEnd(row, col)
+      (row === startTile.row && col === startTile.col) ||
+      (row === endTile.row && col === endTile.col)
     ) {
       return;
     }
 
-    if (isMouseDown) {
-      const newGrid = createNewGrid(grid, row, col);
-
-      setGrid(newGrid);
-    }
+    setGrid(createNewGrid(grid, row, col));
   };
 
   return (
-    <div className="w-full px-2 sm:px-4 lg:px-6">
+    <div
+      className="w-full px-2 sm:px-4 lg:px-6"
+      onMouseUp={handleMouseUp}
+    >
       <div
         className="
           w-full
@@ -71,7 +153,9 @@ export function Grid({
           display: "grid",
           gridTemplateColumns: `repeat(${grid[0]?.length ?? 1}, minmax(0, 1fr))`,
         }}
-        onMouseLeave={() => setIsMouseDown(false)}
+        onMouseLeave={() => {
+          setIsMouseDown(false);
+        }}
       >
         {grid.map((row) =>
           row.map((tile) => {
@@ -95,6 +179,10 @@ export function Grid({
                 isPath={isPath}
                 isTraversed={isTraversed}
                 isWall={isWall}
+                isDragging={
+                  (draggingTile === "start" && isStart) ||
+                  (draggingTile === "end" && isEnd)
+                }
                 handleMouseDown={handleMouseDown}
                 handleMouseUp={handleMouseUp}
                 handleMouseEnter={handleMouseEnter}

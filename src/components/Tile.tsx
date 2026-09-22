@@ -22,6 +22,7 @@ export function Tile({
   isTraversed,
   isWall,
   isPath,
+  isDragging,
   handleMouseDown,
   handleMouseUp,
   handleMouseEnter,
@@ -33,6 +34,7 @@ export function Tile({
   isTraversed: boolean;
   isWall: boolean;
   isPath: boolean;
+  isDragging: boolean;
   handleMouseDown: MouseFunction;
   handleMouseUp: MouseFunction;
   handleMouseEnter: MouseFunction;
@@ -59,16 +61,16 @@ export function Tile({
       className={twMerge(
         tileStyle,
 
-        /*
-         * Keep the outer border clean.
-         */
         isLastRow && "border-b",
         isLastColumn && "border-r",
 
-        /*
-         * Make sure tiles don't shrink below the grid column.
-         */
-        "min-w-0 cursor-pointer select-none",
+        "min-w-0 select-none",
+
+        isStart || isEnd
+          ? "cursor-grab"
+          : "cursor-pointer",
+
+        isDragging && "cursor-grabbing",
       )}
       id={`${row}-${col}`}
       onMouseDown={() => handleMouseDown(row, col)}
