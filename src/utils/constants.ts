@@ -48,20 +48,15 @@ export const END_TILE_CONFIGURATION = {
 export const TILE_STYLE =
   "w-full aspect-square border-r border-b border-slate-600/40";
 
-export const TRAVERSED_TILE_STYLE =
-  TILE_STYLE + " bg-gray-400";
+export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-gray-400";
 
-export const START_TILE_STYLE =
-  TILE_STYLE + " bg-blue-600";
+export const START_TILE_STYLE = TILE_STYLE + " bg-blue-600";
 
-export const END_TILE_STYLE =
-  TILE_STYLE + " bg-red-600";
+export const END_TILE_STYLE = TILE_STYLE + " bg-red-600";
 
-export const WALL_TILE_STYLE =
-  TILE_STYLE + " bg-stone-600";
+export const WALL_TILE_STYLE = TILE_STYLE + " bg-stone-600";
 
-export const PATH_TILE_STYLE =
-  TILE_STYLE + " bg-yellow-600";
+export const PATH_TILE_STYLE = TILE_STYLE + " bg-yellow-600";
 
 export const MAZES: MazeSelectType[] = [
   { name: "No Maze", value: "NONE" },
@@ -77,9 +72,12 @@ export const PATHFINDING_ALGORITHMS: AlgorithmSelectType[] = [
 ];
 
 export const SPEEDS: SpeedSelectType[] = [
+  { name: "Very Slow", value: 4 },
   { name: "Slow", value: 2 },
   { name: "Medium", value: 1 },
   { name: "Fast", value: 0.5 },
+  { name: "Very Fast", value: 0.25 },
+  { name: "Ultra Fast", value: 0.1 },
 ];
 
 export const SLEEP_TIME = 8;
