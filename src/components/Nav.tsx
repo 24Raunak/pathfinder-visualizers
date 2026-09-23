@@ -114,7 +114,7 @@ export function Nav({
   return (
     <div className="flex items-center justify-center min-h-18 border-b shadow-gray-600 sm:px-5 px-0">
       <div className="flex items-center lg:justify-between justify-center w-full sm:w-208">
-        <div className="grid grid-cols-1 sm:grid-cols-5 items-start gap-3 sm:gap-6 sm:py-0 py-4 mt-2 mb-2 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-4 items-start gap-3 sm:gap-6 sm:py-0 py-4 mt-2 mb-2">
           
           <RadioGroup
             label="Maze"
@@ -124,16 +124,13 @@ export function Nav({
             onChange={handleGenerateMaze}
           />
 
-          <div className="sm:col-span-2 min-w-0">
-            <RadioGroup
-              label="Graph"
-              value={algorithm}
-              options={PATHFINDING_ALGORITHMS}
-              isDisabled={isDisabled}
-              onChange={setAlgorithm}
-              compact
-            />
-          </div>
+          <RadioGroup
+            label="Graph"
+            value={algorithm}
+            options={PATHFINDING_ALGORITHMS}
+            isDisabled={isDisabled}
+            onChange={setAlgorithm}
+          />
 
           <RadioGroup
             label="Speed"
