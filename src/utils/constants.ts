@@ -69,6 +69,9 @@ export const PATHFINDING_ALGORITHMS: AlgorithmSelectType[] = [
   { name: "A-Star", value: "A_STAR" },
   { name: "Breadth First Search", value: "BFS" },
   { name: "Depth First Search", value: "DFS" },
+  { name: "Greedy Best-First Search", value: "GREEDY_BEST_FIRST" },
+  { name: "Bidirectional BFS", value: "BIDIRECTIONAL_BFS" },
+  { name: "Iterative Deepening DFS", value: "IDDFS" },
 ];
 
 export const SPEEDS: SpeedSelectType[] = [
