@@ -13,8 +13,8 @@ import {
  * The CSS grid will make the tiles fit the available
  * container instead of giving every tile a fixed width.
  */
-export const MAX_ROWS = 30;
-export const MAX_COLS = 60;
+export const MAX_ROWS = 31;
+export const MAX_COLS = 61;
 
 export const START_TILE_CONFIGURATION = {
   row: 1,
