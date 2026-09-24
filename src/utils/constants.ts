@@ -65,6 +65,7 @@ export const MAZES: MazeSelectType[] = [
 ];
 
 export const PATHFINDING_ALGORITHMS: AlgorithmSelectType[] = [
+  { name: "Human", value: "HUMAN" },
   { name: "Dijkstra", value: "DIJKSTRA" },
   { name: "A-Star", value: "A_STAR" },
   { name: "Breadth First Search", value: "BFS" },

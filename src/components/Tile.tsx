@@ -22,6 +22,8 @@ export function Tile({
   isTraversed,
   isWall,
   isPath,
+  isPlayer,
+  isVisitedByPlayer,
   isDragging,
   handleMouseDown,
   handleMouseUp,
@@ -34,6 +36,8 @@ export function Tile({
   isTraversed: boolean;
   isWall: boolean;
   isPath: boolean;
+  isPlayer: boolean;
+  isVisitedByPlayer: boolean;
   isDragging: boolean;
   handleMouseDown: MouseFunction;
   handleMouseUp: MouseFunction;
@@ -60,22 +64,21 @@ export function Tile({
     <div
       className={twMerge(
         tileStyle,
-
         isLastRow && "border-b",
         isLastColumn && "border-r",
-
-        "min-w-0 select-none",
-
-        isStart || isEnd
-          ? "cursor-grab"
-          : "cursor-pointer",
-
+        "relative min-w-0 select-none",
+        isVisitedByPlayer && !isStart && !isEnd && !isWall && "bg-emerald-100",
+        isStart || isEnd ? "cursor-grab" : "cursor-pointer",
         isDragging && "cursor-grabbing",
       )}
       id={`${row}-${col}`}
       onMouseDown={() => handleMouseDown(row, col)}
       onMouseUp={() => handleMouseUp(row, col)}
       onMouseEnter={() => handleMouseEnter(row, col)}
-    />
+    >
+      {isPlayer && (
+        <span className="absolute inset-1/4 rounded-full bg-purple-700 ring-2 ring-purple-300" />
+      )}
+    </div>
   );
 }
